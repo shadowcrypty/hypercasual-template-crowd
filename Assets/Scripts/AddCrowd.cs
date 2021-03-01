@@ -11,6 +11,7 @@ namespace Crowd.Member
         public GameObject _member;
         public float _aci ;
         public float _offset;
+        public Vector3 cordinate;
 
         
         private void OnTriggerEnter(Collider other)
@@ -18,13 +19,15 @@ namespace Crowd.Member
             if (other.tag=="Player" && this.tag != "Player")
             {
                 transform.SetParent(_member.transform);
-                _aci = _member.transform.childCount - 1;
-                _aci *= 90;
-                transform.position=new Vector3();
+                
+                //Debug.Log(_aci);
+                //cordinate =new Vector3(Mathf.Sin(_aci*Mathf.Deg2Rad),1.5f,Mathf.Cos(_aci*Mathf.Deg2Rad))+transform.parent.parent.position;
+                
+                transform.position = cordinate;
+                
                 this.tag = "Player";
             }
         }
-        
 
     }
 }

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: 0
   _vertical: 0
+  _horizontalSpeed: 0.1
+  _verticalSpeed: 0.1

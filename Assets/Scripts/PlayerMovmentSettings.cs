@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Crowd.Player
 {
 
-    [CreateAssetMenu(menuName ="Crowd/Player")]
+    [CreateAssetMenu(menuName ="Crowd/Player/PlayerSettings")]
     public class PlayerMovmentSettings : ScriptableObject
     {
         [SerializeField] public float _horizontal;

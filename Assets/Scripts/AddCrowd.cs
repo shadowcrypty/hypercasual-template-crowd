@@ -25,7 +25,7 @@ namespace Crowd.Member
             {
 
                 Transform enemy = other.transform.childCount == 0 ? other.transform.parent.transform : other.transform.GetChild(0);
-                Debug.Log(enemy.name);
+                //Debug.Log(enemy.name);
                 transform.SetParent(enemy);
 
                 this.tag = "Enemy";

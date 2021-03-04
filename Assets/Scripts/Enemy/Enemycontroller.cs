@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Crowd.Member;
+using System.Linq;
 
 namespace Crowd.Enemy
 {
     public class Enemycontroller : MonoBehaviour
     {
         //List<T> ts = new List<T>;
+        public List<LCrowd> cList = new List<LCrowd>();
         [SerializeField] private EnemySettings _enemySettings;
         NavMeshAgent _agent;
         GameObject[] _crowds;
@@ -16,8 +19,8 @@ namespace Crowd.Enemy
         private void Start()
         {
             //ts.Sort()
-            _crowds = GameObject.FindGameObjectsWithTag("Crowd");
 
+            _crowds = GameObject.FindGameObjectsWithTag("Crowd");
             _agent = GetComponent<NavMeshAgent>();
             StartCoroutine(chase());
         }
@@ -32,24 +35,30 @@ namespace Crowd.Enemy
 
         public IEnumerator chase()
         {
+            _crowds = GameObject.FindGameObjectsWithTag("Crowd");
             for (int i = 0; i < _crowds.Length; i++)
             {
-                Debug.Log("Start");
-                _crowds = GameObject.FindGameObjectsWithTag("Crowd");
-                float distance = Vector3.Distance(transform.position, _crowds[i].transform.position);
-                if (distance <= _enemySettings.LookRadius)
-                {
-                    _agent.SetDestination(_crowds[i].transform.position);
-                    Debug.Log(_crowds[i]);
-                    
+                LCrowd _lCrowd=new LCrowd(gameObject,_crowds[i]);
+                //_lCrowd.crowd = _crowds[i];
 
-                    break;
-                    //yield return null;
-                }
-                //
+                cList.Add(_lCrowd);
 
             }
-            yield return new WaitForSeconds(3f);
+            float min = cList.Min(item => item.distance);
+            //var nearest = cList.Where(item => item.distance == min);
+            //Debug.Log(nearest);
+            foreach (var item in cList)
+            {
+                if (item.distance == min)
+                {
+                    _agent.SetDestination(item.cVector);
+                    break;
+                   
+                }
+            }
+            
+            yield return _agent.speed == 0;
+            cList.Clear();
 
             Debug.Log("restarted");
             StartCoroutine(chase());
@@ -59,7 +68,7 @@ namespace Crowd.Enemy
         }
         private void Update()
         {
-           
+            
 
         }
     }

@@ -2,8 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
+
+
+
 namespace Crowd.Member
 {
+
+    public class LCrowd
+    {
+        public GameObject crowd;
+        public GameObject enemyai;
+        public float distance;
+        public Vector3 cVector;
+        public LCrowd(GameObject enemyai, GameObject crowd)
+        {
+
+
+            this.distance = Vector3.Distance(enemyai.transform.position, crowd.transform.position);
+            cVector = crowd.transform.position;
+        }
+
+
+    }
 
 
     public class AddCrowd : MonoBehaviour
